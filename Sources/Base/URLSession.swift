@@ -4,8 +4,9 @@ public extension URLSession {
     
     @MainActor
     func perform<ResultType>(_ request: URLRequest,
-                             checkResponse: ((HTTPURLResponse) ->())? = nil,
-                             parseResponse: @escaping(Data) throws->(ResultType)) async ->
+                             checkResponse: ((HTTPURLResponse) -> ())? = nil,
+                             parseResponse: @escaping(Data) throws -> (ResultType),
+                             parseErrorResponse: @escaping(Data) throws -> CommonError = { _ in throw CommonError.custom("No error parsing") }) async ->
         Result<ResultType, CommonError> {
         
         do {
@@ -25,17 +26,17 @@ public extension URLSession {
                     }
                 }
                 else if response.statusCode == 401 {
-                    return .failure(.session(.missingToken))
+                    return .failure(try parseErrorResponse(rawResponse.0) ?!? .session(.missingToken))
                 }
                 else if response.statusCode == 403 {
-                    return .failure(.api("No authorization for this resource"))
+                    return .failure(try parseErrorResponse(rawResponse.0) ?!? .api("No authorization for this resource"))
                 }
                 else if response.statusCode == 404 {
-                    return .failure(.api("Resource not found"))
+                    return .failure(try parseErrorResponse(rawResponse.0) ?!? .api("Resource not found"))
                 }
                 else if response.httpStatus == .clientError {
                     request.httpDebugLog("Error \(response.statusCode)")
-                    return .failure(.client(.invalidInput))
+                    return .failure(try parseErrorResponse(rawResponse.0) ?!? .client(.invalidInput))
                 }
                 request.httpDebugLog(String(format: "Returned HTTP status code %@", String(describing: response.statusCode)))
             }
