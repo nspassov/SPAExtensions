@@ -1,6 +1,6 @@
 import Foundation
 
-extension NSDecimalNumber {
+public extension NSDecimalNumber {
     
     private static let formatter = NumberFormatter()
     
