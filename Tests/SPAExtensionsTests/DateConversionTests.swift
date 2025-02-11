@@ -17,7 +17,7 @@ extension XCTestCase {
     }
 }
 
-extension Locale {
+fileprivate extension Locale {
     static let us = Locale(identifier: "en_US")
     static let bg = Locale(identifier: "bg_BG")
 }

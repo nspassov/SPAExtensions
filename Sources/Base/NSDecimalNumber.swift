@@ -4,22 +4,27 @@ public extension NSDecimalNumber {
     
     private static let formatter = NumberFormatter()
     
-    func toString(locale: Locale) -> String {
+    func toString(locale: Locale,
+                  style: NumberFormatter.Style = .decimal,
+                  fractionDigits: Int = 2) -> String {
         Self.formatter.locale = locale
-        Self.formatter.numberStyle = .decimal
-        Self.formatter.maximumFractionDigits = 2
-        Self.formatter.minimumFractionDigits = 2
+        Self.formatter.numberStyle = style
+        Self.formatter.maximumFractionDigits = fractionDigits
+        Self.formatter.minimumFractionDigits = fractionDigits
         return Self.formatter.string(from: self) ?? ""
     }
     
-    static func from(string: String, locale: Locale) -> NSDecimalNumber? {
+    static func from(string: String,
+                     locale: Locale,
+                     style: NumberFormatter.Style = .decimal) -> NSDecimalNumber? {
         guard !string.isEmpty else {
             return NSDecimalNumber.zero
         }
+        guard string != (locale.decimalSeparator ?? "") else {
+            return NSDecimalNumber.zero
+        }
         Self.formatter.locale = locale
-        Self.formatter.numberStyle = .decimal
-        Self.formatter.maximumFractionDigits = 2
-        Self.formatter.minimumFractionDigits = 2
+        Self.formatter.numberStyle = style
         if let number = Self.formatter.number(from: string) {
             return NSDecimalNumber.init(decimal: number.decimalValue)
         }
