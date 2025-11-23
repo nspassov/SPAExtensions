@@ -4,6 +4,10 @@ import UIKit
 
 public extension URL {
     
+    static var systemSettings: URL {
+        return URL(string: UIApplication.openSettingsURLString)!
+    }
+    
     @MainActor
     @discardableResult func openExternally() async -> Bool {
         if UIApplication.shared.canOpenURL(self) {
