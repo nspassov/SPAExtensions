@@ -2,7 +2,6 @@ import Foundation
 
 public extension URLSession {
     
-    @MainActor
     func perform<ResultType>(_ request: URLRequest,
                              checkResponse: ((HTTPURLResponse) -> ())? = nil,
                              parseResponse: @escaping(Data) throws -> (ResultType),
