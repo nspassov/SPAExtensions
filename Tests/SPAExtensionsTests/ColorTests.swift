@@ -20,4 +20,10 @@ final class ColorTests: XCTestCase {
         XCTAssertEqual(UIColor(from: "#00ff00"), UIColor.green)
         XCTAssertEqual(UIColor(from: "#0000ff"), UIColor.blue)
     }
+    
+    func test3() throws {
+        XCTAssertEqual(UIColor(from: "ff0000"), UIColor.red)
+        XCTAssertEqual(UIColor(from: "00ff00"), UIColor.green)
+        XCTAssertEqual(UIColor(from: "0000ff"), UIColor.blue)
+    }
 }

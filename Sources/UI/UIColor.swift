@@ -10,27 +10,13 @@ public extension UIColor {
     }
     
     convenience init?(from hexString: String, alpha: CGFloat = 1) {
-        if hexString.hasPrefix("#") {
-            let start = hexString.index(hexString.startIndex, offsetBy: 1)
-            if String(hexString[start...]).count == 6 {
-                let hexInt = Int(from: hexString)
-                self.init(from: hexInt, alpha: alpha)
-                return
-            }
+        let start = hexString.index(hexString.startIndex,
+                                    offsetBy: hexString.hasPrefix("#") ? 1 : 0)
+        if String(hexString[start...]).count == 6 {
+            let hexInt = Int(from: hexString)
+            self.init(from: hexInt, alpha: alpha)
+            return
         }
         return nil
-    }
-}
-
-extension Int {
-    init(from hexString: String) {
-        var hexInt: UInt32 = 0
-        // Create scanner
-        let scanner: Scanner = Scanner(string: hexString)
-        // Tell scanner to skip the # character
-        scanner.charactersToBeSkipped = CharacterSet(charactersIn: "#")
-        // Scan hex value
-        hexInt = UInt32(bitPattern: scanner.scanInt32(representation: .hexadecimal) ?? 0)
-        self.init(hexInt)
     }
 }
