@@ -4,8 +4,8 @@ public extension URLSession {
     
     func perform<ResultType>(_ request: URLRequest,
                              checkResponse: ((HTTPURLResponse) -> ())? = nil,
-                             parseResponse: @escaping(Data) throws -> (ResultType),
-                             parseErrorResponse: @escaping(Data) throws -> CommonError = { _ in throw CommonError.custom("No error parsing") }) async ->
+                             parseResponse: @Sendable @escaping(Data) throws -> (ResultType),
+                             parseErrorResponse: @Sendable @escaping(Data) throws -> CommonError = { _ in throw CommonError.custom("No error parsing") }) async ->
         Result<ResultType, CommonError> {
         
         do {
