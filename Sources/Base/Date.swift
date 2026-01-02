@@ -94,6 +94,15 @@ public extension Date {
         return Self.dateFormatter.string(from: self)
     }
     
+    func toUIDate(locale: Locale = .current,
+                   timeZone: TimeZone = .current) -> String {
+        Self.dateFormatter.locale = locale
+        Self.dateFormatter.dateStyle = .medium
+        Self.dateFormatter.timeStyle = .none
+        Self.dateFormatter.timeZone = timeZone
+        return Self.dateFormatter.string(from: self)
+    }
+    
     func toTime() -> TimeOnly? {
         return TimeOnly(from: self, in: .current)
     }
