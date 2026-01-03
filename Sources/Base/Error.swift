@@ -82,6 +82,8 @@ public extension Error {
                 return .network(.tlsError)
             case -1005:
                 return .network(.down)
+            case -1011:
+                return .server(.down)
             default:
                 return .custom(self.localizedDescription)
             }
