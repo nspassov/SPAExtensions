@@ -22,6 +22,7 @@ public enum CommonError: Error, CustomStringConvertible {
     public enum Server: String, Error {
         case `internal` = "Internal server error"
         case apiResponse = "Unsupported/Malformed API response"
+        case down = "Service unavailable"
     }
     
     public enum Client: String, Error {
