@@ -17,13 +17,13 @@ public enum CommonError: Error, CustomStringConvertible {
     public enum Session: String, Error {
         case missingToken = "Authentication with the server failed. Please check your login credentials and try to log in again"
         case missingCredentials = "Missing credentials, please re-login"
+        case disconnected = "Failed connecting to the server"
     }
     
     public enum Server: String, Error {
         case `internal` = "Internal server error"
         case apiResponse = "Unsupported/Malformed API response"
         case down = "Service unavailable"
-        case disconnected = "Failed connecting to the server"
     }
     
     public enum Client: String, Error {
@@ -92,7 +92,7 @@ public extension Error {
         else if errorDomain == "NSPOSIXErrorDomain" {
             switch code {
             case 57:
-                return .server(.disconnected)
+                return .session(.disconnected)
             default:
                 return .custom(self.localizedDescription)
             }
