@@ -37,7 +37,7 @@ public extension URLSession {
                     request.httpDebugLog("Error \(response.statusCode)")
                     return .failure(try parseErrorResponse(rawResponse.0) ?!? .client(.invalidInput))
                 }
-                else if response.statusCode == 503 {
+                else if response.statusCode == 502 || response.statusCode == 503 {
                     return .failure(try parseErrorResponse(rawResponse.0) ?!? .server(.down))
                 }
                 request.httpDebugLog(String(format: "Returned HTTP status code %@", String(describing: response.statusCode)))

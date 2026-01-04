@@ -23,6 +23,7 @@ public enum CommonError: Error, CustomStringConvertible {
         case `internal` = "Internal server error"
         case apiResponse = "Unsupported/Malformed API response"
         case down = "Service unavailable"
+        case disconnected = "Failed connecting to the server"
     }
     
     public enum Client: String, Error {
@@ -91,7 +92,7 @@ public extension Error {
         else if errorDomain == "NSPOSIXErrorDomain" {
             switch code {
             case 57:
-                return .server(.down)
+                return .server(.disconnected)
             default:
                 return .custom(self.localizedDescription)
             }
