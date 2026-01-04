@@ -88,6 +88,14 @@ public extension Error {
                 return .custom(self.localizedDescription)
             }
         }
+        else if errorDomain == "NSPOSIXErrorDomain" {
+            switch code {
+            case 57:
+                return .server(.down)
+            default:
+                return .custom(self.localizedDescription)
+            }
+        }
         return nil
     }
     
