@@ -91,7 +91,7 @@ public extension Error {
         }
         else if errorDomain == "NSPOSIXErrorDomain" {
             switch code {
-            case 57:
+            case 57, 54:
                 return .session(.disconnected)
             default:
                 return .custom(self.localizedDescription)
