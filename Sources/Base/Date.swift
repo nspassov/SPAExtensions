@@ -116,10 +116,11 @@ public extension Date {
         return Self.dateFormatter.string(from: self)
     }
     
-    func toUITimeRelative(locale: Locale = .current,
+    func toUITimeRelative(dateStyle: DateFormatter.Style = .medium,
+                          locale: Locale = .current,
                           timeZone: TimeZone = .current) -> String {
         Self.relativeDateFormatter.locale = locale
-        Self.relativeDateFormatter.dateStyle = .medium
+        Self.relativeDateFormatter.dateStyle = dateStyle
         Self.relativeDateFormatter.timeStyle = .short
         Self.relativeDateFormatter.timeZone = timeZone
         Self.relativeDateFormatter.doesRelativeDateFormatting = true
