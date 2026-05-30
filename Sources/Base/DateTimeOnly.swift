@@ -9,7 +9,7 @@ public extension Calendar {
 }
 
 /// Time and timezone-agnostic date representation that can be easily converted to a `Date` object.
-public struct DateOnly: Sendable, Hashable, CustomStringConvertible {
+public struct DateOnly: Codable, Hashable, CustomStringConvertible, Sendable {
     public let year: Int
     public let month: Int
     public let day: Int
@@ -61,13 +61,27 @@ public struct DateOnly: Sendable, Hashable, CustomStringConvertible {
 
 
 /// Date-agnositc 24-hour time representation that can be easily converted to a `Date` object.
-public struct TimeOnly: Sendable, Hashable, CustomStringConvertible {
+public struct TimeOnly: Codable, Hashable, CustomStringConvertible, Sendable {
     public let hours: Int
     public let minutes: Int
     public let seconds: Int
     
     public var description: String {
         return String(format: "%02d:%02d", hours, minutes)
+    }
+    
+    public init?(withoutValidation timeString: String) {
+        let a = timeString.components(separatedBy: ":")
+        if a.count >= 2,
+           a[0].count == 2, let hours = Int(a[0]),
+           a[1].count == 2, let minutes = Int(a[1]) {
+            
+            self.hours = hours
+            self.minutes = minutes
+            self.seconds = 0
+            return
+        }
+        return nil
     }
     
     public init?(_ timeString: String) {
